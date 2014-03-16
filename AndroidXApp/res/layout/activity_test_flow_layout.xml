@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TestFlowLayoutActivity" 
+    
+    android:orientation="vertical">
+
+	<Button
+		android:id="@+id/button_change_test"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="change test"
+		android:onClick="onClick"
+		/>
+
+
+	<FrameLayout
+		android:id="@+id/layout_test_area"
+		android:layout_width="match_parent"
+		android:layout_height="400dp"
+		android:background="#cdcdcd"
+		/>
+
+
+</LinearLayout>

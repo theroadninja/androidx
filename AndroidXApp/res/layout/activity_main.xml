@@ -1,0 +1,70 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical" >
+
+
+	
+    <TextView style="@style/Text" android:text="linear layout:" />
+        
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+		
+		<include layout="@layout/merge_boxes1" />
+		
+	</LinearLayout>
+       
+       
+    <TextView style="@style/Text" android:text="flow layout:" />
+        
+	<x.FlowLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+		
+		<include layout="@layout/merge_boxes1" />
+		
+	</x.FlowLayout>
+	
+	
+    <TextView style="@style/Text" android:text="linear layout:" />
+        
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+		
+		<include layout="@layout/merge_boxes2" />
+		
+	</LinearLayout>
+	<!-- -->
+	
+	
+    <TextView style="@style/Text" android:text="flow layout:" />
+        
+	<x.FlowLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="#aaaaaa">
+		
+		<include layout="@layout/merge_boxes2" />
+		
+	</x.FlowLayout>	
+	
+	
+	<TextView  android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="........." />
+
+
+	<Button
+		android:id="@+id/button_test_flow_layout"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Test Flow Layout"
+		android:onClick="onClick"
+		/>
+
+
+
+</LinearLayout>

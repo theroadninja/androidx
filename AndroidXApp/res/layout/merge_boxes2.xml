@@ -1,0 +1,65 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+>
+
+
+
+	<View style="@style/Box" android:background="#ffeeaa"
+		android:layout_gravity="top"
+	 />
+
+	<View style="@style/Box" android:background="#ddeeaa" 
+		android:layout_height="50dp"/>
+	
+	<View style="@style/Box" android:background="#00ff99"
+		android:layout_gravity="bottom" />
+		
+	<View style="@style/Box" android:background="#00ccff" 
+		android:layout_gravity="center"
+		/>
+	
+	<View style="@style/Box" android:background="#0033cc" />
+
+	<View style="@style/Box" android:background="#6600ff" 
+		android:layout_marginLeft="10dp"/>
+	
+	<View style="@style/Box" android:background="#cc00ff" />
+	
+	<View style="@style/Box" android:background="#ff6699" />
+	
+	<View style="@style/Box" android:background="#ff6600" />
+	
+	<View style="@style/Box" android:background="#ffcc00" />
+	
+	
+	
+	
+	
+	
+	
+		<View style="@style/Box" android:background="#ffeeaa" />
+
+	<View style="@style/Box" android:background="#ddeeaa" 
+		/>
+	
+	<View style="@style/Box" android:background="#00ff99" />
+		
+	<View style="@style/Box" android:background="#00ccff" 
+		/>
+	
+	<View style="@style/Box" android:background="#0033cc" />
+
+	<View style="@style/Box" android:background="#6600ff" />
+	
+	<View style="@style/Box" android:background="#cc00ff" />
+	
+	<View style="@style/Box" android:background="#ff6699" />
+	
+	<View style="@style/Box" android:background="#ff6600" />
+	
+	<View style="@style/Box" android:background="#ffcc00"
+		android:layout_marginBottom="20dp" />
+	
+	
+	
+
+</merge>

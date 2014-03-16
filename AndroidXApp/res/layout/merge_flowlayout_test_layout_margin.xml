@@ -1,0 +1,53 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+>
+
+
+
+
+
+<LinearLayout
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	>
+	
+	
+	
+    <TextView style="@style/Text" android:text="linear layout:" />
+        
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		
+		android:layout_marginLeft="50dp"
+		android:layout_marginRight="50dp"
+		android:layout_marginTop="10dp"
+		android:layout_marginBottom="10dp"
+		>
+		
+		<include layout="@layout/merge_boxes2" />
+		
+	</LinearLayout>
+	<!-- -->
+	
+	
+    <TextView style="@style/Text" android:text="flow layout:" />
+        
+	<x.FlowLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		
+		android:layout_marginLeft="50dp"
+		android:layout_marginRight="50dp"
+		android:layout_marginTop="10dp"
+		android:layout_marginBottom="10dp"
+		
+		android:background="#aaaaaa">
+		
+		<include layout="@layout/merge_boxes2" />
+		
+	</x.FlowLayout>	
+
+</LinearLayout>
+
+</merge>
