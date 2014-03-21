@@ -24,7 +24,8 @@
 	
 	<View style="@style/Box" android:background="#cc00ff" />
 	
-	<View style="@style/Box" android:background="#ff6699" />
+	<View style="@style/Box" android:background="#ff6699" 
+	    android:layout_width="50dp"/>
 	
 	<View style="@style/Box" android:background="#ff6600" />
 	
