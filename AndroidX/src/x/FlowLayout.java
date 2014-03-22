@@ -35,6 +35,8 @@ public class FlowLayout  extends LinearLayout {
 	private int orientation = HORIZONTAL;
 	/** do not rely on the size of this array to indicate how many rows exist */
 	private ArrayList<Integer> measuredRowHeights = new ArrayList<Integer>();
+	private ArrayList<Float> totalRowWeights = new ArrayList<Float>();
+	private ArrayList<Integer> totalRowLengths = new ArrayList<Integer>();
 	/** used by onLayout() */
 	final Rect onLayoutRect = new Rect();
 	/** used by onLayout() -- rect of child after gravity applied */
@@ -76,7 +78,7 @@ public class FlowLayout  extends LinearLayout {
         if (orientation == HORIZONTAL) {
             return new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         } else if (orientation == VERTICAL) {
-            return new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+            return new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         }
         return null;
     }
@@ -236,16 +238,57 @@ public class FlowLayout  extends LinearLayout {
 		int widthMode = MeasureSpec.getMode(widthMeasureSpec);
 		int widthSize = MeasureSpec.getSize(widthMeasureSpec);
 		
-		
-		
-		
-		
+				
 		int rowIndex = 0;
 		
 		int currentRowWidth = 0;
 		int maxRowWidth = 0;
 		
 		measuredRowHeights.clear();
+		totalRowWeights.clear();
+		totalRowLengths.clear();
+		totalRowWeights.add(0.0f);
+		totalRowLengths.add(0);
+		
+		//first pass counts up the weights, remember total space used
+		for(int j = 0; j < getChildCount(); ++j){
+			View child = getChildAt(j);
+			if(child.getVisibility() == View.GONE) continue;
+			
+			LinearLayout.LayoutParams childLp = (LinearLayout.LayoutParams) child.getLayoutParams();
+			totalRowWeights.set(rowIndex, childLp.weight + totalRowWeights.get(rowIndex));
+			
+			int childWidthSpec = ViewGroup.getChildMeasureSpec(widthMeasureSpec, paddingW, childLp.width);
+			int childHeightSpec = ViewGroup.getChildMeasureSpec(heightMeasureSpec, paddingH, childLp.height);
+			
+			child.measure(childWidthSpec, childHeightSpec);
+			
+			int w = child.getMeasuredWidth() + childLp.leftMargin + childLp.rightMargin;
+			boolean newRow = (widthMode != MeasureSpec.UNSPECIFIED
+					&& currentRowWidth + w + paddingW > widthSize);
+			
+            if(newRow){
+				rowIndex++;
+				currentRowWidth = w;
+				totalRowWeights.add(childLp.weight);
+				totalRowLengths.add(rowIndex, currentRowWidth);
+			}else{
+				currentRowWidth += w;
+				totalRowLengths.set(rowIndex, currentRowWidth);
+				
+			}
+			
+			if(currentRowWidth > maxRowWidth){
+				maxRowWidth = currentRowWidth;
+			}
+			
+		}
+		
+
+		rowIndex = 0;
+		
+	    currentRowWidth = 0;
+		maxRowWidth = 0;		
 		
 		for(int i = 0; i < getChildCount(); ++i){
 			View child = getChildAt(i);
@@ -261,7 +304,18 @@ public class FlowLayout  extends LinearLayout {
 			int childWidthSpec = ViewGroup.getChildMeasureSpec(widthMeasureSpec, paddingW, childLp.width);
 			int childHeightSpec = ViewGroup.getChildMeasureSpec(heightMeasureSpec, paddingH, childLp.height);
 			
-			child.measure(childWidthSpec, childHeightSpec);
+			
+			
+			int childWidth = child.getMeasuredWidth();
+			
+			//take care of weight assignments
+			if(childLp.weight > 0.0)
+			{
+				childWidth = (int) (childWidth + ((childLp.weight / totalRowWeights.get(rowIndex)) * 
+						                         ((widthSize - paddingW)- totalRowLengths.get(rowIndex))));
+			}
+			
+			child.measure(MeasureSpec.makeMeasureSpec(childWidth, MeasureSpec.EXACTLY), childHeightSpec);
 			
 			
 			int w = child.getMeasuredWidth() + childLp.leftMargin + childLp.rightMargin;
