@@ -139,6 +139,50 @@ public class FlowLayout  extends LinearLayout {
 		int maxRowHeight = 0;
 		
 		measuredRowHeights.clear();
+		totalRowWeights.clear();
+		totalRowLengths.clear();
+		totalRowWeights.add(0.0f);
+		totalRowLengths.add(0);
+		
+		//first pass counts up the weights, remember total space used
+		for(int j = 0; j < getChildCount(); ++j){
+			View child = getChildAt(j);
+			if(child.getVisibility() == View.GONE) continue;
+			
+			LinearLayout.LayoutParams childLp = (LinearLayout.LayoutParams) child.getLayoutParams();
+			totalRowWeights.set(rowIndex, childLp.weight + totalRowWeights.get(rowIndex));
+			
+			int childWidthSpec = ViewGroup.getChildMeasureSpec(widthMeasureSpec, paddingW, childLp.width);
+			int childHeightSpec = ViewGroup.getChildMeasureSpec(heightMeasureSpec, paddingH, childLp.height);
+			
+			child.measure(childWidthSpec, childHeightSpec);
+			
+			int h = child.getMeasuredHeight() + childLp.bottomMargin + childLp.topMargin;
+			boolean newRow = (heightMode != MeasureSpec.UNSPECIFIED
+					&& currentRowHeight + h + paddingH > heightSize);
+			
+            if(newRow){
+				rowIndex++;
+				currentRowHeight = h;
+				totalRowWeights.add(childLp.weight);
+				totalRowLengths.add(rowIndex, currentRowHeight);
+			}else{
+				currentRowHeight += h;
+				totalRowLengths.set(rowIndex, currentRowHeight);
+				
+			}
+			
+			if(currentRowHeight > maxRowHeight){
+				maxRowHeight = currentRowHeight;
+			}
+			
+		}
+
+		rowIndex = 0;
+		
+	    currentRowHeight = 0;
+		maxRowHeight = 0;		
+		
 		
 		for(int i = 0; i < getChildCount(); ++i){
 			View child = getChildAt(i);
@@ -152,7 +196,17 @@ public class FlowLayout  extends LinearLayout {
 			int childWidthSpec = ViewGroup.getChildMeasureSpec(widthMeasureSpec, paddingW, childLp.width);
 			int childHeightSpec = ViewGroup.getChildMeasureSpec(heightMeasureSpec, paddingH, childLp.height);
 			
-			child.measure(childWidthSpec, childHeightSpec);
+            int childHeight = child.getMeasuredHeight();
+			
+			//take care of weight assignments
+			if(childLp.weight > 0.0)
+			{
+				childHeight = (int) (childHeight + ((childLp.weight / totalRowWeights.get(rowIndex)) * 
+						                         ((heightSize - paddingH) - totalRowLengths.get(rowIndex))));
+			}
+	
+			child.measure(childWidthSpec, MeasureSpec.makeMeasureSpec(childHeight, MeasureSpec.EXACTLY));
+			
 			
 			
 			int w = child.getMeasuredWidth() + childLp.leftMargin + childLp.rightMargin;
