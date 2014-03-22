@@ -28,7 +28,8 @@ public class TestFlowLayoutActivity extends Activity {
 	
 	private int[] tests = new int[]{ 
 			R.layout.merge_flowlayout_test_layout_margin,
-			R.layout.merge_flowlayout_test_layout_padding
+			R.layout.merge_flowlayout_test_layout_padding,
+			R.layout.merge_flowlayout_test_orientation_vertical
 			};
 	
 	private int testIndex = 0;

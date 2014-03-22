@@ -19,8 +19,12 @@
 	
 	<View style="@style/Box" android:background="#ff6699" />
 	
-	<View style="@style/Box" android:background="#ff6600" />
+	<View style="@style/Box" android:background="#ff6600"
+	    android:layout_width="0dp"
+	    android:layout_weight="1" />
 	
-	<View style="@style/Box" android:background="#ffcc00" />
+	<View style="@style/Box" android:background="#ffcc00" 
+	    android:layout_width="0dp"
+	    android:layout_weight="1" />
 
 </merge>
